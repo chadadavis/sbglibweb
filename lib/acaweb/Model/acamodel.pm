@@ -3,12 +3,15 @@ package acaweb::Model::acamodel;
 use strict;
 use base 'Catalyst::Model::DBIC::Schema';
 
+use SBG::U::DB qw/dsn/;
+
+my $database = __PACKAGE__->config->{'database'} || 'aca';
+my $host = __PACKAGE__->config->{'host'};
+my $dsn = "dbi:mysql:dbname=${database};host=${host};user='%'";
+
 __PACKAGE__->config(
     schema_class => 'acaschema',
-    connect_info => [
-        'dbi:mysql:database=aca;host=pevolution;user=%',
-        
-    ],
+    connect_info => [ $dsn ],
 );
 
 =head1 NAME
