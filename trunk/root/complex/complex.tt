@@ -6,6 +6,7 @@
 Description: $target.description
 </p>
 
+
 <form width="30%" id="jmolForm" style="float:left">
 
 <div style="width:400px;height:400px;border:solid 1px lightgray;padding:5px;margin:10px" id="jmol_box"> 
@@ -48,7 +49,7 @@ window.onload = function() { document.getElementById("jmolCommand").focus()}
 </div>
 </form>
 
-<h3>Components</h3>
+
 <table id="hor-zebra" width="65%">
 <tr>
 <th>ACC</th>
@@ -77,6 +78,17 @@ window.onload = function() { document.getElementById("jmolCommand").focus()}
 [% END %]
 </table>
 <a href="javascript:selectChain()">Deselect all</a>
+<br />
 
+[% IF 0 %]
+[% INCLUDE $mapfile %]
+<img src="[%c.uri_for(mappng)%]" usemap="#03"></img>
+[% END %]
+
+
+<br />
+<br />
+<br />
+<br />
 
 [% INCLUDE footer.tt %]

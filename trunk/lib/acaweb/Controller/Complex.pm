@@ -59,6 +59,12 @@ sub complex :Path :Args(1) {
     $c->stash(pdbgzurl => $pdbgzurl);
     $c->log->debug("pdbgzurl:$pdbgzurl");
 
+#    my $mapfile = catfile($webresults, $complex->basedir, $modelid . '.map');
+    # TODO BUG TT doesn't like absolute paths
+#    $mapfile =~ s|^/||;
+#    $c->stash(mapfile=>$mapfile);
+#    $c->stash(mappng=>catfile($webresults, $complex->basedir, $modelid . '.png'));
+
     $c->stash(complex => $complex);
     $c->stash(network => $complex->network_id);
     $c->stash(target => $complex->network_id->target_id);
