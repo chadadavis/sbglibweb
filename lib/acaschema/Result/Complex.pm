@@ -1,51 +1,148 @@
 package acaschema::Result::Complex;
 
+# Created by DBIx::Class::Schema::Loader
+# DO NOT MODIFY THE FIRST PART OF THIS FILE
+
 use strict;
 use warnings;
 
-use base 'DBIx::Class';
+use Moose;
+use MooseX::NonMoose;
+use namespace::autoclean;
+extends 'DBIx::Class::Core';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "Core");
+__PACKAGE__->load_components("InflateColumn::DateTime");
+
+=head1 NAME
+
+acaschema::Result::Complex
+
+=cut
+
 __PACKAGE__->table("complex");
+
+=head1 ACCESSORS
+
+=head2 id
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_auto_increment: 1
+  is_nullable: 0
+
+=head2 model
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_nullable: 0
+
+=head2 network_id
+
+  data_type: 'integer'
+  extra: {unsigned => 1}
+  is_foreign_key: 1
+  is_nullable: 0
+
+=head2 score
+
+  data_type: 'float'
+  is_nullable: 1
+
+=head2 nreplaced
+
+  data_type: 'integer'
+  default_value: 0
+  extra: {unsigned => 1}
+  is_nullable: 0
+
+=head2 path
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 1024
+
+=cut
+
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "INT", default_value => undef, is_nullable => 0, size => 10 },
-  "model",
-  { data_type => "INT", default_value => undef, is_nullable => 0, size => 2 },
-  "network_id",
-  { data_type => "INT", default_value => undef, is_nullable => 0, size => 10 },
-  "score",
-  { data_type => "FLOAT", default_value => undef, is_nullable => 1, size => 32 },
-  "nreplaced",
-  { data_type => "INT", default_value => 0, is_nullable => 0, size => 10 },
-  "path",
   {
-    data_type => "VARCHAR",
-    default_value => undef,
-    is_nullable => 1,
-    size => 1024,
+    data_type => "integer",
+    extra => { unsigned => 1 },
+    is_auto_increment => 1,
+    is_nullable => 0,
   },
+  "model",
+  { data_type => "integer", extra => { unsigned => 1 }, is_nullable => 0 },
+  "network_id",
+  {
+    data_type => "integer",
+    extra => { unsigned => 1 },
+    is_foreign_key => 1,
+    is_nullable => 0,
+  },
+  "score",
+  { data_type => "float", is_nullable => 1 },
+  "nreplaced",
+  {
+    data_type => "integer",
+    default_value => 0,
+    extra => { unsigned => 1 },
+    is_nullable => 0,
+  },
+  "path",
+  { data_type => "varchar", is_nullable => 1, size => 1024 },
 );
 __PACKAGE__->set_primary_key("id", "network_id");
+
+=head1 RELATIONS
+
+=head2 network_id
+
+Type: belongs_to
+
+Related object: L<acaschema::Result::Network>
+
+=cut
+
 __PACKAGE__->belongs_to(
   "network_id",
   "acaschema::Result::Network",
   { id => "network_id" },
 );
+
+=head2 domains
+
+Type: has_many
+
+Related object: L<acaschema::Result::Domain>
+
+=cut
+
 __PACKAGE__->has_many(
   "domains",
   "acaschema::Result::Domain",
   { "foreign.complex_id" => "self.id" },
+  {},
 );
+
+=head2 interactions
+
+Type: has_many
+
+Related object: L<acaschema::Result::Interaction>
+
+=cut
+
 __PACKAGE__->has_many(
   "interactions",
   "acaschema::Result::Interaction",
   { "foreign.complex_id" => "self.id" },
+  {},
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.04005 @ 2010-11-05 13:48:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hh7TtfmhDYrhHZRq0XqsbA
+# Created by DBIx::Class::Schema::Loader v0.07002 @ 2011-02-28 15:51:45
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GC3N21fXm5Ufg2nG6P0Pcw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
@@ -62,4 +159,9 @@ sub basedir {
 	return catdir($exp->label, $target->label, $part, $model); 
 }
 
+1;
+
+
+# You can replace this text with custom content, and it will be preserved on regeneration
+__PACKAGE__->meta->make_immutable;
 1;
