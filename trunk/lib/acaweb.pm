@@ -45,8 +45,8 @@ __PACKAGE__->config(
 __PACKAGE__->setup();
 
 # Logging
-use SBG::U::Run qw/start_log/;
-start_log('acaweb', loglevel=>'DEBUG');
+use Log::Any::Adapter;
+Log::Any::Adapter->set('+SBG::U::Log',level=>'debug',file=>'acaweb.log');
 
 
 =head1 NAME
